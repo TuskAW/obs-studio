@@ -419,8 +419,15 @@ static vec2 GetItemSize(obs_sceneitem_t *item)
 
 		obs_sceneitem_get_scale(item, &scale);
 		obs_sceneitem_get_crop(item, &crop);
-		size.x = float(obs_source_get_width(source) - crop.left - crop.right) * scale.x;
-		size.y = float(obs_source_get_height(source) - crop.top - crop.bottom) * scale.y;
+		size.x = float((int)obs_source_get_width(source) - crop.left - crop.right) * scale.x;
+		size.y = float((int)obs_source_get_height(source) - crop.top - crop.bottom) * scale.y;
+
+		if (size.x < 0.0f) {
+			size.x = 0.0f;
+		}
+		if (size.y < 0.0f) {
+			size.y = 0.0f;
+		}
 	}
 
 	return size;
